@@ -7,11 +7,13 @@
     {
         "id":"2",
         "name":"Batman",
+        "password" : "5678",
         "likes":0
     },
     {
         "id":"3",
         "name":"Piratas del Caribe",
+        "password": "1234",
         "likes":0
     },
     {
