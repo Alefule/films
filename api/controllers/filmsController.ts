@@ -4,6 +4,7 @@ const films = require('../../data/json/films.json');
 export const showFilms = () => films.map(movie => {
     const newMovie = {...movie};
     delete newMovie.likes;
+    delete newMovie.password;
     return newMovie;
 });
 
