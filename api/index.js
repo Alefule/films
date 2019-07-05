@@ -18,3 +18,13 @@ app.listen(app.get('port'), () => {
     console.log(`server on port ${app.get('port')}`);
 });
 
+//Conexion con mongo utilizando mongoose
+
+const mongoose = require('mongoose');
+const URL = 'mongodb://127.0.0.1:27018';
+
+const conexion = mongoose.connect(URL, {useNewUrlParser: true});
+
+console.log(conexion);
+
+
