@@ -1,11 +1,17 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-Film = class {
-    constructor (id, name){
-        this.id = id;
-        this.name = name;
-        this.likes = 0;
+const FilmSchema = new Schema({
+    titulo: {
+        type: String, 
+        required: true
+    },
+    likes: {
+        type: Number,
+        default: 0
     }
-}
+});
 
-module.exports = Film;
+module.exports = mongoose.model('film',FilmSchema);
+
 

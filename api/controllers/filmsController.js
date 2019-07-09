@@ -1,41 +1,40 @@
 const Film = require('../models/Film');
-const films = require('../../data/json/films.json');
+//const films = require('../../data/json/films.json');
 
-exports.showFilms = (req,res) => res.json(films);
+exports.showFilms = async (req,res) => {
+    const films = await Film.find();
+    res.json(films);
+};
 
-exports.showOneFilm = (req,res) => {
-    let id = req.params.id;
-    let film = films.find(film => film.id == id);
-    res.send(film);
+exports.showOneFilm = async (req,res) => {
+    let idToFind = req.params.id;
+    let film = await Film.findOne({_id: idToFind});
+    res.json(film);
 }
 
-exports.addFilm = (req, res) => {
-    let film = {...req.body}
-    let filmToAdd = new Film(film.id,film.name);
-    films.push(filmToAdd);
+exports.addFilm = async (req, res) => {
+    let newFilm = new Film(req.body);
+    await newFilm.save();
+    let films = await Film.find();
+    console.log('Pelicula Guardada');
     res.json(films);
 }
 
-exports.deleteFilm = (req, res) => {
+exports.deleteFilm = async(req, res) => {
     let idToDelete = req.params.id;
-    for (let i = 0; i < films.length; i++) {
-        if (films[i].id == idToDelete) {
-            films.splice(i,1);
-        }
-    }
+    await Film.findOneAndDelete({_id: idToDelete});
+    let films = await Film.find();
+    console.log('Pelicula Borrada ');
     res.json(films);
 }
 
-exports.updateFilm = (req, res) =>{
+exports.updateFilm = async (req, res) =>{
     let idToUpadte = req.params.id;
-    let filmToUpdate = {...req.body};
-    for (let i = 0; i < films.length; i++) {
-        if(films[i].id == idToUpadte){
-            films[i].id = films[i].id;
-            films[i].name = filmToUpdate.name || films[i].name;
-            films[i].likes = filmToUpdate.likes || films[i].likes;
-        }
-    }
+    let infoToUpdate = {...req.body};
+    await Film.findOneAndUpdate({_id: idToUpadte}, infoToUpdate)
+    let films = await Film.find();
+    console.log('Pelicula Modificada ');
+    res.json(films);
 }
 
 
